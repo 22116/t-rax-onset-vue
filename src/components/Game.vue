@@ -34,7 +34,9 @@ export default {
 
     document.onkeydown = function(evt) {
       evt = evt || window.event;
+
       if (evt.keyCode === 32) {
+        evt.preventDefault();
         document.getElementById("messageBox").style.visibility = "hidden";
       }
     };

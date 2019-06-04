@@ -6,6 +6,7 @@ html, body, #app, .t {
   padding: 0;
   margin: 0;
   width: 100%;
+  font-family: url("https://fonts.googleapis.com/css?family=Open+Sans"), Serif;
 }
 
 .runner-canvas {
