@@ -1,4 +1,12 @@
-export default function Runner(outerContainerId, opt_config) {
+export default function Runner(
+  outerContainerId,
+  opt_config,
+  onStart = () => {},
+  onRestart = () => {},
+  onGameOver = () => {},
+  onPaused = () => {},
+  onResumed = () => {}
+) {
   // Singleton
   if (Runner.instance_) {
     return Runner.instance_;
@@ -38,6 +46,11 @@ export default function Runner(outerContainerId, opt_config) {
   this.inverted = false;
   this.invertTimer = 0;
   this.resizeTimerId_ = null;
+  this.onStart = onStart;
+  this.onRestart = onRestart;
+  this.onGameOver = onGameOver;
+  this.onPaused = onPaused;
+  this.onResumed = onResumed;
 
   this.playCount = 0;
 
@@ -295,8 +308,7 @@ Runner.prototype = {
       this.audioContext = new AudioContext();
 
       for (var sound in Runner.sounds) {
-        var soundSrc = document.getElementById(Runner.sounds[sound])
-          .src;
+        var soundSrc = document.getElementById(Runner.sounds[sound]).src;
         soundSrc = soundSrc.substr(soundSrc.indexOf(",") + 1);
         var buffer = decodeBase64ToArrayBuffer(soundSrc);
 
@@ -490,6 +502,8 @@ Runner.prototype = {
       // }
       this.playing = true;
       this.activated = true;
+
+      this.onStart();
     } else if (this.crashed) {
       this.restart();
     }
@@ -833,6 +847,7 @@ Runner.prototype = {
 
     // Reset the time clock.
     this.time = getTimeStamp();
+    this.onGameOver();
   },
 
   stop: function() {
@@ -853,6 +868,8 @@ Runner.prototype = {
   },
 
   restart: function() {
+    this.onRestart();
+
     if (!this.raqId) {
       this.playCount++;
       this.runningTime = 0;
@@ -882,8 +899,10 @@ Runner.prototype = {
       e.type == "blur" ||
       document.visibilityState != "visible"
     ) {
+      this.onPaused();
       this.stop();
     } else if (!this.crashed) {
+      this.onResumed();
       this.tRex.reset();
       this.play();
     }
@@ -914,10 +933,9 @@ Runner.prototype = {
       this.invertTimer = 0;
       this.inverted = false;
     } else {
-      this.inverted = document.body.classList.toggle(
-        Runner.classes.INVERTED,
-        this.invertTrigger
-      );
+      this.inverted = document
+        .getElementById("t")
+        .classList.toggle(Runner.classes.INVERTED, this.invertTrigger);
     }
   }
 };
