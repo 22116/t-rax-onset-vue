@@ -1,19 +1,19 @@
 {
   "name": "onset-runner",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": false,
   "description": "Onset runner game",
   "author": "Victor Fedorenko",
   "license": "MIT",
-  "main": "./dist/index.esm.js",
+  "main": "./dist/index.umd.js",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "build:all": "npm run build:umd & npm run build:es & npm run build:unpkg",
-    "build:umd": "rollup --config build/rollup.config.js --format umd --file dist/vue-symfony-form.umd.js",
-    "build:es": "rollup --config build/rollup.config.js --format es --file dist/vue-symfony-form.esm.js",
-    "build:unpkg": "rollup --config build/rollup.config.js --format iife --file dist/vue-symfony-form.min.js"
+    "build:umd": "rollup --config build/rollup.config.js --format umd --file dist/onset-runner.umd.js",
+    "build:es": "rollup --config build/rollup.config.js --format es --file dist/onset-runner.esm.js",
+    "build:unpkg": "rollup --config build/rollup.config.js --format iife --file dist/onset-runner.min.js"
   },
   "dependencies": {
     "core-js": "^2.6.5",

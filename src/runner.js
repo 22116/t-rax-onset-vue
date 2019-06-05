@@ -5,7 +5,8 @@ export default function Runner(
   onRestart = () => {},
   onGameOver = () => {},
   onPaused = () => {},
-  onResumed = () => {}
+  onResumed = () => {},
+  onColisionTouch = () => {}
 ) {
   // Singleton
   if (Runner.instance_) {
@@ -51,6 +52,7 @@ export default function Runner(
   this.onGameOver = onGameOver;
   this.onPaused = onPaused;
   this.onResumed = onResumed;
+  this.onColisionTouch = onColisionTouch;
 
   this.playCount = 0;
 
@@ -594,6 +596,7 @@ Runner.prototype = {
           this.currentSpeed += this.config.ACCELERATION;
         }
       } else {
+        this.onColisionTouch();
         this.gameOver();
       }
 

@@ -68,7 +68,8 @@ export default {
       this.onRestarted,
       this.onGameOver,
       this.onPaused,
-      this.onResumed
+      this.onResumed,
+      this.onColisionTouch
     );
 
     document.onkeydown = function(evt) {
@@ -81,6 +82,11 @@ export default {
     };
   },
   methods: {
+    onColisionTouch: function() {
+      console.log("Colision touched");
+
+      this.$emit("coilision-touched");
+    },
     onStart: function() {
       console.debug("Started");
 
