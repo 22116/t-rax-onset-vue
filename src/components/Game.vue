@@ -99,7 +99,7 @@ export default {
 
       setTimeout(() => {
         this.$refs.main.style.backgroundColor = tmpColor;
-      }, 500);
+      }, 100);
     },
     onStart: function() {
       console.debug("Started");
