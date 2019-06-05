@@ -597,7 +597,7 @@ Runner.prototype = {
         }
       } else {
         this.onColisionTouch();
-        this.gameOver();
+        // this.gameOver();
       }
 
       var playAchievementSound = this.distanceMeter.update(

@@ -86,6 +86,12 @@ export default {
       console.log("Colision touched");
 
       this.$emit("coilision-touched");
+
+      if (this.runner.runningTime < 25) {
+        this.runner.runningTime = 0;
+      } else {
+        this.runner.runningTime -= 25;
+      }
     },
     onStart: function() {
       console.debug("Started");
