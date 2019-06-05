@@ -87,11 +87,19 @@ export default {
 
       this.$emit("coilision-touched");
 
-      if (this.runner.runningTime < 25) {
-        this.runner.runningTime = 0;
+      if (this.runner.distanceRan < 25) {
+        this.runner.distanceRan = 0;
       } else {
-        this.runner.runningTime -= 25;
+        this.runner.distanceRan -= 25;
       }
+
+      const tmpColor = this.$refs.main.style.backgroundColor;
+
+      this.$refs.main.style.backgroundColor = "#FF0000";
+
+      setTimeout(() => {
+        this.$refs.main.style.backgroundColor = tmpColor;
+      }, 500);
     },
     onStart: function() {
       console.debug("Started");
@@ -164,8 +172,7 @@ export default {
         if (this.data.hasOwnProperty(++this.index)) {
           this.runner.setSpeed(this.data[this.index] * 10);
         } else {
-          alert("Game over. Your current result: " + this.runner.runningTime);
-          this.$emit("finished", this.runner.runningTime);
+          this.$emit("finished", this.runner.distanceRan);
           this.runner.gameOver();
         }
       }, parseInt(this.interval.toString()));
