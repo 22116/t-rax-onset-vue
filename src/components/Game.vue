@@ -142,10 +142,10 @@ export default {
         if (this.data.hasOwnProperty(++this.index)) {
           let val = this.data[this.index] * 10;
 
-          if (val < 2) {
-            val = 2;
-          } else if (val > 15) {
-            val = 15;
+          if (val < 3.5) {
+            val = 3.5;
+          } else if (val > 10) {
+            val = 10;
           }
 
           this.$emit("changed", this.index);
