@@ -53,6 +53,7 @@ export default function Runner(
   this.onPaused = onPaused;
   this.onResumed = onResumed;
   this.onColisionTouch = onColisionTouch;
+  this.colissionTrigger = false;
 
   this.playCount = 0;
 
@@ -590,13 +591,18 @@ Runner.prototype = {
         hasObstacles && checkForCollision(this.horizon.obstacles[0], this.tRex);
 
       if (!collision) {
+        if (this.colissionTrigger) {
+          this.colissionTrigger = false;
+        }
+
         this.distanceRan += (this.currentSpeed * deltaTime) / this.msPerFrame;
 
         if (this.currentSpeed < this.config.MAX_SPEED) {
           this.currentSpeed += this.config.ACCELERATION;
         }
-      } else {
+      } else if (!this.colissionTrigger) {
         this.onColisionTouch();
+        this.colissionTrigger = true;
       }
 
       var playAchievementSound = this.distanceMeter.update(

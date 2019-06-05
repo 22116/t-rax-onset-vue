@@ -43,6 +43,7 @@
 <script>
 import "../assets/css/index.css";
 import Runner from "../runner";
+import { getRandomColor } from "../utils";
 
 export default {
   name: "Game",
@@ -50,7 +51,7 @@ export default {
     beats: { type: Array, required: true },
     data: { type: Array, required: true },
     interval: { type: Number, required: true },
-    audio: HTMLAudioElement
+    audio: { type: HTMLAudioElement, required: true }
   },
   data: function() {
     return {
@@ -87,74 +88,44 @@ export default {
 
       this.$emit("coilision-touched");
 
-      if (this.runner.distanceRan < 25) {
+      if (this.runner.distanceRan < 100) {
         this.runner.distanceRan = 0;
       } else {
-        this.runner.distanceRan -= 25;
+        this.runner.distanceRan -= 100;
       }
-
-      const tmpColor = this.$refs.main.style.backgroundColor;
-
-      this.$refs.main.style.backgroundColor = "#FF0000";
-
-      setTimeout(() => {
-        this.$refs.main.style.backgroundColor = tmpColor;
-      }, 100);
     },
     onStart: function() {
-      console.debug("Started");
-
       this.$emit("started");
-
       this.audio.play();
-
       this.listener = this.initListener();
+      this.changeColor();
     },
     onPaused: function() {
-      console.debug("Paused");
-
       this.$emit("paused");
-
       this.audio.pause();
     },
     onResumed: function() {
-      console.debug("Resumed");
-
       this.$emit("resumed");
-
       this.audio.play();
     },
     onRestarted: function() {
-      console.debug("Restarted");
-
       this.$emit("restarted");
-
       this.audio.load();
       this.audio.play();
       this.listener = this.initListener();
     },
     onGameOver: function() {
-      console.debug("Game Over");
-
-      this.$emit("end");
-
       this.audio.pause();
+
       clearInterval(this.listener);
+
       this.index = 0;
       this.indexBeats = 0;
+
+      this.$emit("end");
     },
     changeColor: function() {
-      this.$refs.main.style.backgroundColor = this.getRandomColor();
-    },
-    getRandomColor: function() {
-      let letters = "0123456789ABCDEF";
-      let color = "#";
-
-      for (let i = 0; i < 6; i++) {
-        color += letters[Math.floor(Math.random() * 16)];
-      }
-
-      return color;
+      this.$refs.main.style.backgroundColor = getRandomColor();
     },
     initListener: function() {
       return setInterval(() => {
@@ -164,7 +135,6 @@ export default {
 
         if (this.beats.hasOwnProperty(++this.indexBeats)) {
           if (this.beats[this.indexBeats] > 0) {
-            console.log(this.beats[this.indexBeats]);
             this.changeColor();
           }
         }
