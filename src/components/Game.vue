@@ -51,7 +51,10 @@ export default {
     beats: { type: Array, required: true },
     data: { type: Array, required: true },
     interval: { type: Number, required: true },
-    audio: [HTMLAudioElement, null]
+    audio: [HTMLAudioElement, null],
+    min: { type: Number, default: 3.5 },
+    max: { type: Number, default: 15 },
+    multiplier: { type: Number, default: 10 }
   },
   data: function() {
     return {
@@ -140,12 +143,12 @@ export default {
         }
 
         if (this.data.hasOwnProperty(++this.index)) {
-          let val = this.data[this.index] * 10;
+          let val = this.data[this.index] * this.multiplier;
 
-          if (val < 3.5) {
-            val = 3.5;
-          } else if (val > 10) {
-            val = 10;
+          if (val < this.min) {
+            val = this.min;
+          } else if (val > this.max) {
+            val = this.max;
           }
 
           this.$emit("changed", this.index);
