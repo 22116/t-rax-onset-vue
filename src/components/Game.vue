@@ -52,7 +52,7 @@ export default {
     beats: { type: Array, required: true },
     data: { type: Array, required: true },
     interval: { type: Number, required: true },
-    audio: HTMLAudioElement
+    audio: [HTMLAudioElement, null]
   },
   data: function() {
     return {
@@ -63,20 +63,16 @@ export default {
     };
   },
   mounted() {
-    if (!Vue.prototype.hasOwnProperty("$runner")) {
-      Vue.prototype.$runner = new Runner(
-        ".interstitial-wrapper",
-        null,
-        this.onStart,
-        this.onRestarted,
-        this.onGameOver,
-        this.onPaused,
-        this.onResumed,
-        this.onColisionTouch
-      );
-    }
-
-    this.runner = this.$runner;
+    this.runner = new Runner(
+      ".interstitial-wrapper",
+      null,
+      this.onStart,
+      this.onRestarted,
+      this.onGameOver,
+      this.onPaused,
+      this.onResumed,
+      this.onColisionTouch
+    );
 
     document.onkeydown = function(evt) {
       evt = evt || window.event;
@@ -145,7 +141,15 @@ export default {
         }
 
         if (this.data.hasOwnProperty(++this.index)) {
-          this.runner.setSpeed(this.data[this.index] * 10);
+          let val = this.data[this.index] * 10;
+
+          if (val < 2) {
+            val = 2;
+          } else if (val > 15) {
+            val = 15;
+          }
+
+          this.runner.setSpeed(val);
         } else {
           this.$emit("finished", this.runner.distanceRan);
           this.runner.gameOver();

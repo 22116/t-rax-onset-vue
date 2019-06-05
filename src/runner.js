@@ -10,7 +10,8 @@ export default function Runner(
 ) {
   // Singleton
   if (Runner.instance_) {
-    return Runner.instance_;
+    Runner.instance_.stopListening();
+    delete Runner.instance_;
   }
   Runner.instance_ = this;
 
@@ -80,7 +81,7 @@ window["Runner"] = Runner;
  * Default game width.
  * @const
  */
-var DEFAULT_WIDTH = 600;
+var DEFAULT_WIDTH = 1000;
 
 /**
  * Frames per second.
