@@ -41,6 +41,7 @@
 </template>
 
 <script>
+import Vue from "vue";
 import "../assets/css/index.css";
 import Runner from "../runner";
 import { getRandomColor } from "../utils";
@@ -51,7 +52,7 @@ export default {
     beats: { type: Array, required: true },
     data: { type: Array, required: true },
     interval: { type: Number, required: true },
-    audio: { type: HTMLAudioElement, required: true }
+    audio: HTMLAudioElement
   },
   data: function() {
     return {
@@ -62,16 +63,20 @@ export default {
     };
   },
   mounted() {
-    this.runner = new Runner(
-      ".interstitial-wrapper",
-      null,
-      this.onStart,
-      this.onRestarted,
-      this.onGameOver,
-      this.onPaused,
-      this.onResumed,
-      this.onColisionTouch
-    );
+    if (!Vue.prototype.hasOwnProperty("$runner")) {
+      Vue.prototype.$runner = new Runner(
+        ".interstitial-wrapper",
+        null,
+        this.onStart,
+        this.onRestarted,
+        this.onGameOver,
+        this.onPaused,
+        this.onResumed,
+        this.onColisionTouch
+      );
+    }
+
+    this.runner = this.$runner;
 
     document.onkeydown = function(evt) {
       evt = evt || window.event;
@@ -88,10 +93,10 @@ export default {
 
       this.$emit("coilision-touched");
 
-      if (this.runner.distanceRan < 100) {
+      if (this.runner.distanceRan < 1000) {
         this.runner.distanceRan = 0;
       } else {
-        this.runner.distanceRan -= 100;
+        this.runner.distanceRan -= 1000;
       }
     },
     onStart: function() {
