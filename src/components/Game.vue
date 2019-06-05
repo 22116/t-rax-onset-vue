@@ -41,7 +41,6 @@
 </template>
 
 <script>
-import Vue from "vue";
 import "../assets/css/index.css";
 import Runner from "../runner";
 import { getRandomColor } from "../utils";
@@ -148,6 +147,8 @@ export default {
           } else if (val > 15) {
             val = 15;
           }
+
+          this.$emit("changed", this.index);
 
           this.runner.setSpeed(val);
         } else {
