@@ -99,7 +99,7 @@ export default {
     },
     onStart: function() {
       this.$emit("started");
-      this.audio.play();
+      this.playAudio();
       this.listener = this.initListener();
       this.changeColor();
     },
@@ -109,12 +109,12 @@ export default {
     },
     onResumed: function() {
       this.$emit("resumed");
-      this.audio.play();
+      this.playAudio();
     },
     onRestarted: function() {
       this.$emit("restarted");
       this.audio.load();
-      this.audio.play();
+      this.playAudio();
       this.listener = this.initListener();
     },
     onGameOver: function() {
@@ -126,6 +126,11 @@ export default {
       this.indexBeats = 0;
 
       this.$emit("end");
+    },
+    playAudio: function() {
+      if (typeof this.$refs.main === "undefined") {
+        this.audio.play();
+      }
     },
     changeColor: function() {
       this.$refs.main.style.backgroundColor = getRandomColor();
