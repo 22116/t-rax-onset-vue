@@ -128,7 +128,7 @@ export default {
       this.$emit("end");
     },
     playAudio: function() {
-      if (typeof this.$refs.main === "undefined") {
+      if (typeof this.$refs.main !== "undefined") {
         this.audio.play();
       }
     },
