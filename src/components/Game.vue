@@ -87,8 +87,6 @@ export default {
   },
   methods: {
     onColisionTouch: function() {
-      console.log("Colision touched");
-
       this.$emit("coilision-touched");
 
       if (this.runner.distanceRan < 1000) {
@@ -164,7 +162,7 @@ export default {
 
           this.runner.setSpeed(val);
         } else {
-          this.$emit("finished", this.runner.distanceRan);
+          this.$emit("finished", this.runner.getDistance());
           this.runner.gameOver();
         }
       }, parseInt(this.interval.toString()));

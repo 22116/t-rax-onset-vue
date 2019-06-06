@@ -667,6 +667,10 @@ Runner.prototype = {
     }.bind(this)(e.type, Runner.events);
   },
 
+  getDistance: function() {
+    return this.distanceMeter.getActualDistance(Math.ceil(this.distanceRan));
+  },
+
   /**
    * Bind relevant key / mouse / touch listeners.
    */
@@ -856,7 +860,7 @@ Runner.prototype = {
 
     // Reset the time clock.
     this.time = getTimeStamp();
-    this.onGameOver();
+    this.onGameOver(Math.ceil(this.distanceRan));
   },
 
   stop: function() {
