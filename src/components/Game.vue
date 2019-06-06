@@ -136,6 +136,10 @@ export default {
           return;
         }
 
+        if (typeof this.$refs.main === "undefined") {
+          this.gameOver();
+        }
+
         if (this.beats.hasOwnProperty(++this.indexBeats)) {
           if (this.beats[this.indexBeats] > 0) {
             this.changeColor();
