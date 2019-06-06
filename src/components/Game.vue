@@ -131,13 +131,13 @@ export default {
       this.$refs.main.style.backgroundColor = getRandomColor();
     },
     initListener: function() {
-      return setInterval(() => {
-        if (!this.runner.isRunning()) {
-          return;
+      let interval = setInterval(() => {
+        if (typeof this.$refs.main === "undefined") {
+          return clearInterval(interval);
         }
 
-        if (typeof this.$refs.main === "undefined") {
-          this.gameOver();
+        if (!this.runner.isRunning()) {
+          return;
         }
 
         if (this.beats.hasOwnProperty(++this.indexBeats)) {
@@ -163,6 +163,8 @@ export default {
           this.runner.gameOver();
         }
       }, parseInt(this.interval.toString()));
+
+      return interval;
     }
   }
 };
