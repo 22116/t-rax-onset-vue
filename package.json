@@ -22,7 +22,7 @@
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.8.0",
     "@vue/cli-plugin-eslint": "^3.8.0",
-    "@vue/cli-service": "^3.8.0",
+    "@vue/cli-service": "^5.0.8",
     "@vue/eslint-config-prettier": "^4.0.1",
     "babel-eslint": "^10.0.1",
     "bili": "^4.8.0",
@@ -33,7 +33,7 @@
     "rollup-plugin-css-only": "^1.0.0",
     "rollup-plugin-image": "^1.0.2",
     "rollup-plugin-postcss": "^2.0.3",
-    "rollup-plugin-vue": "^5.0.0",
+    "rollup-plugin-vue": "^6.0.0",
     "vue-template-compiler": "^2.6.10"
   },
   "files": [
